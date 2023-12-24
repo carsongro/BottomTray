@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B80E062B2B38C6F40007F659 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80E062A2B38C6F40007F659 /* Extensions.swift */; };
 		B864333E2B3638C2004D70D8 /* MiniPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B864333D2B3638C2004D70D8 /* MiniPlayerViewController.swift */; };
 		B86433402B364840004D70D8 /* FullScreenPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B864333F2B364840004D70D8 /* FullScreenPlayerViewController.swift */; };
 		B86433422B3655CF004D70D8 /* FullScreenPlayerAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86433412B3655CF004D70D8 /* FullScreenPlayerAnimationController.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B80E062A2B38C6F40007F659 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		B864333D2B3638C2004D70D8 /* MiniPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewController.swift; sourceTree = "<group>"; };
 		B864333F2B364840004D70D8 /* FullScreenPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenPlayerViewController.swift; sourceTree = "<group>"; };
 		B86433412B3655CF004D70D8 /* FullScreenPlayerAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenPlayerAnimationController.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 		B8892CDD2B3540D400D29012 /* BottomTray */ = {
 			isa = PBXGroup;
 			children = (
+				B80E062A2B38C6F40007F659 /* Extensions.swift */,
 				B8892CDE2B3540D400D29012 /* AppDelegate.swift */,
 				B8892CE02B3540D400D29012 /* SceneDelegate.swift */,
 				B8892CE72B3540D400D29012 /* Assets.xcassets */,
@@ -182,6 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B86433422B3655CF004D70D8 /* FullScreenPlayerAnimationController.swift in Sources */,
+				B80E062B2B38C6F40007F659 /* Extensions.swift in Sources */,
 				B8DB64042B35E63300FF0D49 /* LibraryViewController.swift in Sources */,
 				B8892CDF2B3540D400D29012 /* AppDelegate.swift in Sources */,
 				B864333E2B3638C2004D70D8 /* MiniPlayerViewController.swift in Sources */,

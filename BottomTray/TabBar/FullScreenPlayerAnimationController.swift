@@ -10,7 +10,7 @@ import UIKit
 class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        0.35
+        0.36
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -34,6 +34,7 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
             transitionContext.completeTransition(false)
             return
         }
+//        toVC.view.layoutIfNeeded()
         
         let containerView = transitionContext.containerView
         let finalFrame = transitionContext.finalFrame(for: toVC)

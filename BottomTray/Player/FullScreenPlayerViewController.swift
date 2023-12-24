@@ -23,31 +23,34 @@ class FullScreenPlayerViewController: UIViewController {
         return imageView
     }()
     
-    let dismissButton: UIButton = {
+    let grabber: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "x.circle.fill"), for: .normal)
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 2.5
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.grabberBlur(style: .systemThinMaterialLight, cornerRadius: 2.5)
         return button
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(trackImage)
-        view.addSubview(dismissButton)
+        view.addSubview(grabber)
         view.backgroundColor = .systemBackground
+        grabber.addTarget(self, action: #selector(didTapDismiss), for: .touchUpInside)
         addConstraints()
-        dismissButton.addTarget(self, action: #selector(didTapDismiss), for: .touchUpInside)
         view.layer.cornerRadius = 50
     }
     
-    private func addConstraints() {
+    func addConstraints() {
         NSLayoutConstraint.activate([
-            dismissButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            dismissButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            dismissButton.widthAnchor.constraint(equalToConstant: 30),
+            grabber.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            grabber.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            grabber.widthAnchor.constraint(equalToConstant: 44),
+            grabber.heightAnchor.constraint(equalToConstant: 44),
             
             trackImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            trackImage.topAnchor.constraint(equalTo: dismissButton.bottomAnchor, constant: 10),
+            trackImage.topAnchor.constraint(equalTo: grabber.bottomAnchor),
             trackImage.widthAnchor.constraint(equalToConstant: 400),
             trackImage.heightAnchor.constraint(equalToConstant: 400),
         ])
@@ -56,4 +59,8 @@ class FullScreenPlayerViewController: UIViewController {
     @objc private func didTapDismiss() {
         delegate?.didTapDismiss()
     }
+}
+
+#Preview {
+    FullScreenPlayerViewController()
 }
