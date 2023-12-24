@@ -7,9 +7,9 @@
 
 import UIKit
 
-class MiniPlayerViewController: UIViewController {
+class MiniPlayerViewController: UIViewController, FullScreenPlayerDelegate {
     
-    private let trackImage: UIImageView = {
+    let trackImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "square.fill")
         imageView.contentMode = .scaleAspectFill
@@ -17,15 +17,15 @@ class MiniPlayerViewController: UIViewController {
         return imageView
     }()
     
-    private let textView: UILabel = {
+    let textView: UILabel = {
         let label = UILabel()
         label.text = "Track Name"
         label.font = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-    private let playPauseButton: UIButton = {
+
+    let playPauseButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(
@@ -85,11 +85,16 @@ class MiniPlayerViewController: UIViewController {
     private func presentFullScreenPlayer() {
         let fullScreenPlayer = FullScreenPlayerViewController()
         fullScreenPlayer.modalPresentationStyle = .custom
+        fullScreenPlayer.delegate = self
         fullScreenPlayer.transitioningDelegate = self
         if let sheet = fullScreenPlayer.sheetPresentationController {
             sheet.prefersGrabberVisible = true
         }
         present(fullScreenPlayer, animated: true)
+    }
+    
+    func didTapDismiss() {
+        dismiss(animated: true)
     }
 }
 
@@ -99,8 +104,12 @@ extension MiniPlayerViewController: UIViewControllerTransitioningDelegate {
         presenting: UIViewController,
         source: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
-        return FullScreenPlayerAnimationController(originFrame: view.frame)
+        FullScreenPlayerAnimationController()
     }
+    
+//    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//        FullScreenPlayerAnimationController()
+//    }
 }
 
 #Preview {

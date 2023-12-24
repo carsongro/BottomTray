@@ -8,6 +8,8 @@
 import UIKit
 
 class TabBarController: UITabBarController {
+    
+    let miniPlayer = MiniPlayerViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +51,6 @@ class TabBarController: UITabBarController {
             animated: true
         )
         
-        let miniPlayer = MiniPlayerViewController()
         addChild(miniPlayer)
         view.addSubview(miniPlayer.view)
         miniPlayer.view.translatesAutoresizingMaskIntoConstraints = false
