@@ -47,7 +47,7 @@ class FullScreenPlayerViewController: UIViewController {
             dismissButton.widthAnchor.constraint(equalToConstant: 30),
             
             trackImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            trackImage.topAnchor.constraint(equalTo: dismissButton.bottomAnchor, constant: 30),
+            trackImage.topAnchor.constraint(equalTo: dismissButton.bottomAnchor, constant: 10),
             trackImage.widthAnchor.constraint(equalToConstant: 400),
             trackImage.heightAnchor.constraint(equalToConstant: 400),
         ])

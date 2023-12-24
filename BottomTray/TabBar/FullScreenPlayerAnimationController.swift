@@ -10,7 +10,7 @@ import UIKit
 class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        0.3
+        0.35
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -34,8 +34,6 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
             transitionContext.completeTransition(false)
             return
         }
-//        toVC.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-//        toVC.view.layoutIfNeeded()
         
         let containerView = transitionContext.containerView
         let finalFrame = transitionContext.finalFrame(for: toVC)
@@ -46,11 +44,21 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         
         let imageView = UIImageView()
         imageView.image = fromVC.trackImage.image
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = fromVC.trackImage.contentMode
         imageView.frame = fromVC.trackImage.convert(fromVC.trackImage.bounds, to: fromVC.view.window)
+        
+        guard let trackName = fromVC.textView.snapshotView(afterScreenUpdates: false),
+              let playPauseButton = fromVC.playPauseButton.snapshotView(afterScreenUpdates: false) else {
+            transitionContext.completeTransition(false)
+            return
+        }
+        trackName.frame = fromVC.textView.convert(fromVC.textView.bounds, to: fromVC.view.window)
+        playPauseButton.frame = fromVC.playPauseButton.convert(fromVC.playPauseButton.bounds, to: fromVC.view.window)
         
         containerView.addSubview(toVC.view)
         containerView.addSubview(backgroundView)
+        containerView.addSubview(trackName)
+        containerView.addSubview(playPauseButton)
         containerView.addSubview(imageView)
         toVC.view.isHidden = true
         
@@ -62,7 +70,24 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
             options: []) {
                 backgroundView.layer.cornerRadius = 50
                 backgroundView.frame = finalFrame
+                
                 imageView.frame = toVC.trackImage.frame
+                
+                trackName.frame = CGRect(
+                    x: trackName.frame.minX,
+                    y: toVC.view.frame.minY,
+                    width: trackName.frame.width,
+                    height: trackName.frame.height
+                )
+                trackName.alpha = 0
+                
+                playPauseButton.frame = CGRect(
+                    x: playPauseButton.frame.minX,
+                    y: toVC.view.frame.minY,
+                    width: playPauseButton.frame.width,
+                    height: playPauseButton.frame.height
+                )
+                playPauseButton.alpha = 0
             } completion: { _ in
                 defer {
                     transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
@@ -72,6 +97,8 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
                 
                 backgroundView.removeFromSuperview()
                 imageView.removeFromSuperview()
+                trackName.removeFromSuperview()
+                playPauseButton.removeFromSuperview()
             }
     }
     
@@ -88,10 +115,34 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         
         let imageView = UIImageView()
         imageView.image = fromVC.trackImage.image
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = fromVC.trackImage.contentMode
         imageView.frame = fromVC.trackImage.convert(fromVC.trackImage.bounds, to: fromVC.view.window)
         
+        guard let trackName = toVC.textView.snapshotView(afterScreenUpdates: false),
+              let playPauseButton = toVC.playPauseButton.snapshotView(afterScreenUpdates: false) else {
+            transitionContext.completeTransition(false)
+            return
+        }
+        
+        trackName.frame = CGRect(
+            x: toVC.textView.frame.minX,
+            y: fromVC.view.frame.minY,
+            width: toVC.textView.frame.width,
+            height: toVC.textView.frame.height
+        )
+        trackName.alpha = 0
+        
+        playPauseButton.frame = CGRect(
+            x: toVC.playPauseButton.frame.minX,
+            y: fromVC.view.frame.minY,
+            width: toVC.playPauseButton.frame.width,
+            height: toVC.playPauseButton.frame.height
+        )
+        playPauseButton.alpha = 0
+        
         containerView.addSubview(backgroundView)
+        containerView.addSubview(trackName)
+        containerView.addSubview(playPauseButton)
         containerView.addSubview(imageView)
         fromVC.view.isHidden = true
         
@@ -104,6 +155,12 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
                 backgroundView.layer.cornerRadius = 15
                 backgroundView.frame = toVC.view.frame
                 imageView.frame = toVC.trackImage.convert(toVC.trackImage.bounds, to: fromVC.view.window)
+                
+                trackName.frame = toVC.textView.convert(toVC.textView.bounds, to: toVC.view.window)
+                trackName.alpha = 1
+                
+                playPauseButton.frame = toVC.playPauseButton.convert(toVC.playPauseButton.bounds, to: toVC.view.window)
+                playPauseButton.alpha = 1
             } completion: { _ in
                 defer {
                     fromVC.view.isHidden = false
