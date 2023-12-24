@@ -29,11 +29,13 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         to toVC: FullScreenPlayerViewController,
         transitionContext: UIViewControllerContextTransitioning
     ) {
-        // TODO: Figure out why removing this guard breaks the whole thing
-        guard let snapshot = toVC.view.snapshotView(afterScreenUpdates: true) else {
+        // TODO: Figure out why removing this guard breaks the whole thing, layoutIfNeeded almost fixes it but still has hitches
+        guard let _ = toVC.view.snapshotView(afterScreenUpdates: true) else {
             transitionContext.completeTransition(false)
             return
         }
+//        toVC.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+//        toVC.view.layoutIfNeeded()
         
         let containerView = transitionContext.containerView
         let finalFrame = transitionContext.finalFrame(for: toVC)
@@ -78,13 +80,7 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         to toVC: MiniPlayerViewController,
         transitionContext: UIViewControllerContextTransitioning
     ) {
-//        guard let snapshot = toVC.view.snapshotView(afterScreenUpdates: true) else {
-//            transitionContext.completeTransition(false)
-//            return
-//        }
-        
         let containerView = transitionContext.containerView
-        let finalFrame = transitionContext.finalFrame(for: toVC)
         
         let backgroundView = UIView(frame: fromVC.view.frame)
         backgroundView.backgroundColor = .secondarySystemBackground
@@ -95,10 +91,9 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         imageView.contentMode = .scaleAspectFill
         imageView.frame = fromVC.trackImage.convert(fromVC.trackImage.bounds, to: fromVC.view.window)
         
-        containerView.addSubview(toVC.view)
         containerView.addSubview(backgroundView)
         containerView.addSubview(imageView)
-        toVC.view.isHidden = true
+        fromVC.view.isHidden = true
         
         UIView.animate(
             springDuration: transitionDuration(using: transitionContext),
@@ -107,14 +102,13 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
             delay: 0,
             options: []) {
                 backgroundView.layer.cornerRadius = 15
-                backgroundView.frame = finalFrame
-                imageView.frame = toVC.trackImage.convert(toVC.trackImage.frame, to: fromVC.view.window)
+                backgroundView.frame = toVC.view.frame
+                imageView.frame = toVC.trackImage.convert(toVC.trackImage.bounds, to: fromVC.view.window)
             } completion: { _ in
                 defer {
+                    fromVC.view.isHidden = false
                     transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
                 }
-                
-                toVC.view.isHidden = false
                 
                 backgroundView.removeFromSuperview()
                 imageView.removeFromSuperview()

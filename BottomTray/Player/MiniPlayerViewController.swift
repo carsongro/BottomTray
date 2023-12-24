@@ -87,9 +87,6 @@ class MiniPlayerViewController: UIViewController, FullScreenPlayerDelegate {
         fullScreenPlayer.modalPresentationStyle = .custom
         fullScreenPlayer.delegate = self
         fullScreenPlayer.transitioningDelegate = self
-        if let sheet = fullScreenPlayer.sheetPresentationController {
-            sheet.prefersGrabberVisible = true
-        }
         present(fullScreenPlayer, animated: true)
     }
     
@@ -107,9 +104,9 @@ extension MiniPlayerViewController: UIViewControllerTransitioningDelegate {
         FullScreenPlayerAnimationController()
     }
     
-//    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//        FullScreenPlayerAnimationController()
-//    }
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        FullScreenPlayerAnimationController()
+    }
 }
 
 #Preview {
