@@ -10,7 +10,7 @@ import UIKit
 class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        0.36
+        0.365
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -20,7 +20,7 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         case (let fromVC as FullScreenPlayerViewController, let toVC as TabBarController):
             animateDismiss(from: fromVC, to: toVC.miniPlayer, transitionContext: transitionContext)
         default:
-            assertionFailure("Incorrect View Controllers")
+            assertionFailure("Incorrect View Controller Types")
         }
     }
     
@@ -56,10 +56,23 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         trackName.frame = fromVC.textView.convert(fromVC.textView.bounds, to: fromVC.view.window)
         playPauseButton.frame = fromVC.playPauseButton.convert(fromVC.playPauseButton.bounds, to: fromVC.view.window)
         
+        let grabber = UIButton()
+        grabber.layer.masksToBounds = true
+        grabber.layer.cornerRadius = 2.5
+        grabber.grabberBlur(style: .systemThinMaterialLight, cornerRadius: 2.5)
+        grabber.frame = CGRect(
+            x: Int(toVC.view.frame.midX - 22),
+            y: Int(playPauseButton.frame.midY),
+            width: 44,
+            height: 44
+        )
+        grabber.alpha = 0
+        
         containerView.addSubview(toVC.view)
         containerView.addSubview(backgroundView)
         containerView.addSubview(trackName)
         containerView.addSubview(playPauseButton)
+        containerView.addSubview(grabber)
         containerView.addSubview(imageView)
         toVC.view.isHidden = true
         
@@ -89,6 +102,14 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
                     height: playPauseButton.frame.height
                 )
                 playPauseButton.alpha = 0
+                
+                grabber.alpha = 1
+                grabber.frame = CGRect(
+                    x: Int(toVC.view.frame.midX - grabber.frame.width / 2),
+                    y: Int(toVC.view.safeAreaInsets.top),
+                    width: 44,
+                    height: 44
+                )
             } completion: { _ in
                 defer {
                     transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
@@ -100,6 +121,7 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
                 imageView.removeFromSuperview()
                 trackName.removeFromSuperview()
                 playPauseButton.removeFromSuperview()
+                grabber.removeFromSuperview()
             }
     }
     
@@ -141,9 +163,17 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         )
         playPauseButton.alpha = 0
         
+        let grabber = UIButton()
+        grabber.layer.masksToBounds = true
+        grabber.layer.cornerRadius = 2.5
+        grabber.grabberBlur(style: .systemThinMaterialLight, cornerRadius: 2.5)
+        grabber.frame = fromVC.grabber.frame
+        grabber.alpha = 1
+        
         containerView.addSubview(backgroundView)
         containerView.addSubview(trackName)
         containerView.addSubview(playPauseButton)
+        containerView.addSubview(grabber)
         containerView.addSubview(imageView)
         fromVC.view.isHidden = true
         
@@ -160,8 +190,17 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
                 trackName.frame = toVC.textView.convert(toVC.textView.bounds, to: toVC.view.window)
                 trackName.alpha = 1
                 
-                playPauseButton.frame = toVC.playPauseButton.convert(toVC.playPauseButton.bounds, to: toVC.view.window)
+                let playPauseButtonRect = toVC.playPauseButton.convert(toVC.playPauseButton.bounds, to: toVC.view.window)
+                playPauseButton.frame = playPauseButtonRect
                 playPauseButton.alpha = 1
+                
+                grabber.alpha = 0
+                grabber.frame = CGRect(
+                    x: grabber.frame.minX,
+                    y: playPauseButtonRect.minY,
+                    width: 44,
+                    height: 44
+                )
             } completion: { _ in
                 defer {
                     fromVC.view.isHidden = false
@@ -170,6 +209,7 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
                 
                 backgroundView.removeFromSuperview()
                 imageView.removeFromSuperview()
+                grabber.removeFromSuperview()
             }
     }
 }

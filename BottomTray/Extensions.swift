@@ -26,8 +26,8 @@ extension UIButton {
         blurView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             topAnchor.constraint(equalTo: blurView.topAnchor, constant: -19.5),
-            leftAnchor.constraint(equalTo: blurView.leftAnchor, constant: -3),
-            rightAnchor.constraint(equalTo: blurView.rightAnchor, constant: 3),
+            leftAnchor.constraint(equalTo: blurView.leftAnchor, constant: -3.5),
+            rightAnchor.constraint(equalTo: blurView.rightAnchor, constant: 3.5),
             bottomAnchor.constraint(equalTo: blurView.bottomAnchor, constant: 19.5),
         ])
         
