@@ -225,7 +225,7 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
                     height: 44
                 )
                 
-                controlsPlayPause.frame = controlsPlayPause.frame.offsetBy(dx: 0, dy: (playPauseButton.frame.minY - controlsPlayPause.frame.minY) * 10)
+                controlsPlayPause.frame = controlsPlayPause.frame.offsetBy(dx: 0, dy: (playPauseButton.frame.minY - controlsPlayPause.frame.minY) * 12)
                 controlsPlayPause.alpha = 0
             } completion: { _ in
                 defer {
