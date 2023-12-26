@@ -5,6 +5,7 @@
 //  Created by Carson Gross on 12/22/23.
 //
 
+import SwiftUI
 import UIKit
 
 protocol FullScreenPlayerDelegate: AnyObject {
@@ -14,6 +15,8 @@ protocol FullScreenPlayerDelegate: AnyObject {
 class FullScreenPlayerViewController: UIViewController {
     
     weak var delegate: FullScreenPlayerDelegate?
+    
+    public private(set) var backgroundSwiftUIController: UIHostingController<BackgroundBlurView>?
     
     let trackImage: UIImageView = {
         let imageView = UIImageView()
@@ -55,6 +58,7 @@ class FullScreenPlayerViewController: UIViewController {
         view.addSubview(playPauseButton)
         view.backgroundColor = .systemBackground
         grabber.addTarget(self, action: #selector(didTapDismiss), for: .touchUpInside)
+        addSwiftUIController()
         addConstraints()
         view.layer.cornerRadius = 50
     }
@@ -76,6 +80,24 @@ class FullScreenPlayerViewController: UIViewController {
             playPauseButton.widthAnchor.constraint(equalToConstant: 44),
             playPauseButton.heightAnchor.constraint(equalToConstant: 44),
         ])
+    }
+    
+    private func addSwiftUIController() {
+        let backgroundController = UIHostingController(rootView: BackgroundBlurView())
+        
+        addChild(backgroundController)
+        backgroundController.didMove(toParent: self)
+        view.insertSubview(backgroundController.view, at: 0)
+        backgroundController.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            backgroundController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            backgroundController.view.leftAnchor.constraint(equalTo: view.leftAnchor),
+            backgroundController.view.rightAnchor.constraint(equalTo: view.rightAnchor),
+            backgroundController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+        
+        backgroundSwiftUIController = backgroundController
     }
         
     @objc private func didTapDismiss() {
