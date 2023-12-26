@@ -32,10 +32,27 @@ class FullScreenPlayerViewController: UIViewController {
         return button
     }()
     
+    let playPauseButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(
+            UIImage(
+                systemName: "play.fill",
+                withConfiguration: UIImage.SymbolConfiguration(
+                    pointSize: 44
+                )
+            ),
+            for: .normal
+        )
+        button.tintColor = .label
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(trackImage)
         view.addSubview(grabber)
+        view.addSubview(playPauseButton)
         view.backgroundColor = .systemBackground
         grabber.addTarget(self, action: #selector(didTapDismiss), for: .touchUpInside)
         addConstraints()
@@ -53,6 +70,11 @@ class FullScreenPlayerViewController: UIViewController {
             trackImage.topAnchor.constraint(equalTo: grabber.bottomAnchor),
             trackImage.widthAnchor.constraint(equalToConstant: 400),
             trackImage.heightAnchor.constraint(equalToConstant: 400),
+            
+            playPauseButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            playPauseButton.topAnchor.constraint(equalTo: trackImage.bottomAnchor, constant: 20),
+            playPauseButton.widthAnchor.constraint(equalToConstant: 44),
+            playPauseButton.heightAnchor.constraint(equalToConstant: 44),
         ])
     }
         

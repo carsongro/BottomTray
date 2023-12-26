@@ -10,7 +10,7 @@ import UIKit
 class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        0.365
+        0.36
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -49,7 +49,8 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         imageView.frame = fromVC.trackImage.convert(fromVC.trackImage.bounds, to: fromVC.view.window)
         
         guard let trackName = fromVC.textView.snapshotView(afterScreenUpdates: false),
-              let playPauseButton = fromVC.playPauseButton.snapshotView(afterScreenUpdates: false) else {
+              let playPauseButton = fromVC.playPauseButton.snapshotView(afterScreenUpdates: false),
+              let controlsPlayPause = toVC.playPauseButton.snapshotView(afterScreenUpdates: true) else {
             transitionContext.completeTransition(false)
             return
         }
@@ -68,8 +69,17 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         )
         grabber.alpha = 0
         
+        controlsPlayPause.frame = CGRect(
+            x: toVC.view.frame.midX - controlsPlayPause.frame.width / 2,
+            y: toVC.view.frame.maxY,
+            width: 44,
+            height: 44
+        )
+        controlsPlayPause.alpha = 0
+        
         containerView.addSubview(toVC.view)
         containerView.addSubview(backgroundView)
+        containerView.addSubview(controlsPlayPause)
         containerView.addSubview(trackName)
         containerView.addSubview(playPauseButton)
         containerView.addSubview(grabber)
@@ -105,8 +115,16 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
                 
                 grabber.alpha = 1
                 grabber.frame = CGRect(
-                    x: Int(toVC.view.frame.midX - grabber.frame.width / 2),
-                    y: Int(toVC.view.safeAreaInsets.top),
+                    x: toVC.view.frame.midX - grabber.frame.width / 2,
+                    y: toVC.view.safeAreaInsets.top,
+                    width: 44,
+                    height: 44
+                )
+                
+                controlsPlayPause.alpha = 1
+                controlsPlayPause.frame = CGRect(
+                    x: toVC.view.frame.midX - controlsPlayPause.frame.width / 2,
+                    y: toVC.trackImage.frame.maxY + 21.5, // TODO: Fix this, for some reason using the frame causes a hitch
                     width: 44,
                     height: 44
                 )
@@ -122,6 +140,7 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
                 trackName.removeFromSuperview()
                 playPauseButton.removeFromSuperview()
                 grabber.removeFromSuperview()
+                controlsPlayPause.removeFromSuperview()
             }
     }
     
@@ -142,7 +161,8 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         imageView.frame = fromVC.trackImage.convert(fromVC.trackImage.bounds, to: fromVC.view.window)
         
         guard let trackName = toVC.textView.snapshotView(afterScreenUpdates: false),
-              let playPauseButton = toVC.playPauseButton.snapshotView(afterScreenUpdates: false) else {
+              let playPauseButton = toVC.playPauseButton.snapshotView(afterScreenUpdates: false),
+              let controlsPlayPause = fromVC.playPauseButton.snapshotView(afterScreenUpdates: false) else {
             transitionContext.completeTransition(false)
             return
         }
@@ -163,6 +183,8 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         )
         playPauseButton.alpha = 0
         
+        controlsPlayPause.frame = fromVC.playPauseButton.convert(fromVC.playPauseButton.bounds, to: fromVC.view.window)
+        
         let grabber = UIButton()
         grabber.layer.masksToBounds = true
         grabber.layer.cornerRadius = 2.5
@@ -171,6 +193,7 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         grabber.alpha = 1
         
         containerView.addSubview(backgroundView)
+        containerView.addSubview(controlsPlayPause)
         containerView.addSubview(trackName)
         containerView.addSubview(playPauseButton)
         containerView.addSubview(grabber)
@@ -201,6 +224,9 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
                     width: 44,
                     height: 44
                 )
+                
+                controlsPlayPause.frame = controlsPlayPause.frame.offsetBy(dx: 0, dy: (playPauseButton.frame.minY - controlsPlayPause.frame.minY) * 10)
+                controlsPlayPause.alpha = 0
             } completion: { _ in
                 defer {
                     fromVC.view.isHidden = false
@@ -210,6 +236,7 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
                 backgroundView.removeFromSuperview()
                 imageView.removeFromSuperview()
                 grabber.removeFromSuperview()
+                controlsPlayPause.removeFromSuperview()
             }
     }
 }
