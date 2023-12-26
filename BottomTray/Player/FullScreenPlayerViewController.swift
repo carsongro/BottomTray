@@ -16,13 +16,16 @@ class FullScreenPlayerViewController: UIViewController {
     
     weak var delegate: FullScreenPlayerDelegate?
     
+    private var initialCenter = CGPoint(x: 0, y: 0)
+    
+    var shouldDismiss = false
+    
     public private(set) var backgroundSwiftUIController: UIHostingController<BackgroundBlurView>?
     
     let trackImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "square.fill")
         imageView.contentMode = .scaleAspectFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
@@ -30,14 +33,12 @@ class FullScreenPlayerViewController: UIViewController {
         let button = UIButton()
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 2.5
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.grabberBlur(style: .systemThinMaterialLight, cornerRadius: 2.5)
         return button
     }()
     
     let playPauseButton: UIButton = {
         let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(
             UIImage(
                 systemName: "play.fill",
@@ -53,33 +54,84 @@ class FullScreenPlayerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        initialCenter = view.center
         view.addSubview(trackImage)
         view.addSubview(grabber)
         view.addSubview(playPauseButton)
         view.backgroundColor = .systemBackground
         grabber.addTarget(self, action: #selector(didTapDismiss), for: .touchUpInside)
-        addSwiftUIController()
-        addConstraints()
+//        addSwiftUIController()
+        layoutViews()
+        addPanGesture()
         view.layer.cornerRadius = 50
     }
     
-    func addConstraints() {
-        NSLayoutConstraint.activate([
-            grabber.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            grabber.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            grabber.widthAnchor.constraint(equalToConstant: 44),
-            grabber.heightAnchor.constraint(equalToConstant: 44),
+    func layoutViews() {
+        grabber.frame = CGRect(
+            x: view.frame.width / 2 - 22,
+            y: view.frame.minY + 45,
+            width: 44,
+            height: 44
+        )
+        
+        trackImage.frame = CGRect(
+            x: view.frame.width / 2 - 200,
+            y: grabber.frame.maxY,
+            width: 400,
+            height: 400
+        )
+        
+        playPauseButton.frame = CGRect(
+            x: view.frame.width / 2 - 22,
+            y: trackImage.frame.maxY + 22,
+            width: 44,
+            height: 44
+        )
+    }
+    
+    private func addPanGesture() {
+        let gesture = UIPanGestureRecognizer(
+            target: self,
+            action: #selector(handleGesture(_:))
+        )
+        
+        view.addGestureRecognizer(gesture)
+    }
+    
+    @objc func handleGesture(_ gestureRecognizer: UIPanGestureRecognizer) {
+        guard let view = gestureRecognizer.view,
+              let superview = view.superview else { return }
+        
+        
+        let translation = gestureRecognizer.translation(in: superview)
+        let velocity = gestureRecognizer.velocity(in: superview)
+        
+        switch gestureRecognizer.state {
+        case .changed:
+            guard translation.y > 0 else { return }
             
-            trackImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            trackImage.topAnchor.constraint(equalTo: grabber.bottomAnchor),
-            trackImage.widthAnchor.constraint(equalToConstant: 400),
-            trackImage.heightAnchor.constraint(equalToConstant: 400),
-            
-            playPauseButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            playPauseButton.topAnchor.constraint(equalTo: trackImage.bottomAnchor, constant: 20),
-            playPauseButton.widthAnchor.constraint(equalToConstant: 44),
-            playPauseButton.heightAnchor.constraint(equalToConstant: 44),
-        ])
+            view.center = CGPoint(x: initialCenter.x, y: initialCenter.y + translation.y)
+            shouldDismiss = translation.y > 400 || velocity.y > 1000 ? true : false
+        case .ended, .cancelled:
+            if shouldDismiss {
+                dismiss(animated: true)
+            } else {
+                resetToCenter()
+            }
+        default:
+            resetToCenter()
+        }
+    }
+    
+    private func resetToCenter() {
+        UIView.animate(
+            springDuration: 0.36,
+            bounce: 0,
+            initialSpringVelocity: 0,
+            delay: 0,
+            options: []) {
+                view.center = initialCenter
+            }
     }
     
     private func addSwiftUIController() {

@@ -6,8 +6,15 @@
 //
 
 import UIKit
+import SwiftUI
 
 class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
+    
+//    let interactionController: PanInteractionController?
+//    
+//    init(interactionController: PanInteractionController?) {
+//        self.interactionController = interactionController
+//    }
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         0.36
@@ -56,7 +63,7 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         }
         trackName.frame = fromVC.textView.convert(fromVC.textView.bounds, to: fromVC.view.window)
         playPauseButton.frame = fromVC.playPauseButton.convert(fromVC.playPauseButton.bounds, to: fromVC.view.window)
-        
+        // TODO: FIX: for some reason the frame from toVC is 0, 0 so figure out how to fix instead of manually setting the frame
         let grabber = UIButton()
         grabber.layer.masksToBounds = true
         grabber.layer.cornerRadius = 2.5
@@ -115,16 +122,16 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
                 
                 grabber.alpha = 1
                 grabber.frame = CGRect(
-                    x: toVC.view.frame.midX - grabber.frame.width / 2,
-                    y: toVC.view.safeAreaInsets.top,
+                    x: toVC.view.frame.width / 2 - 22,
+                    y: toVC.view.frame.minY + 45,
                     width: 44,
                     height: 44
                 )
                 
                 controlsPlayPause.alpha = 1
                 controlsPlayPause.frame = CGRect(
-                    x: toVC.view.frame.midX - controlsPlayPause.frame.width / 2,
-                    y: toVC.trackImage.frame.maxY + 21.5, // TODO: Fix this, for some reason using the frame causes a hitch
+                    x: toVC.view.frame.width / 2 - 22,
+                    y: toVC.trackImage.frame.maxY + 22,
                     width: 44,
                     height: 44
                 )
@@ -189,7 +196,7 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         grabber.layer.masksToBounds = true
         grabber.layer.cornerRadius = 2.5
         grabber.grabberBlur(style: .systemThinMaterialLight, cornerRadius: 2.5)
-        grabber.frame = fromVC.grabber.frame
+        grabber.frame = fromVC.grabber.frame.offsetBy(dx: 0, dy: fromVC.view.frame.minY)
         grabber.alpha = 1
         
         containerView.addSubview(backgroundView)
@@ -225,7 +232,7 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
                     height: 44
                 )
                 
-                controlsPlayPause.frame = controlsPlayPause.frame.offsetBy(dx: 0, dy: (playPauseButton.frame.minY - controlsPlayPause.frame.minY) * 12)
+                controlsPlayPause.frame = controlsPlayPause.frame.offsetBy(dx: 0, dy: 1000)
                 controlsPlayPause.alpha = 0
             } completion: { _ in
                 defer {
