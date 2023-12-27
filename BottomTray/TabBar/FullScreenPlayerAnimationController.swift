@@ -31,20 +31,16 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         }
     }
     
+    //TODO: Use the current playing track color to make the transition smoother instead of gray
     func animatePresent(
         from fromVC: MiniPlayerViewController,
         to toVC: FullScreenPlayerViewController,
         transitionContext: UIViewControllerContextTransitioning
     ) {
-        // TODO: Figure out why removing this guard breaks the whole thing, layoutIfNeeded almost fixes it but still has hitches
-        guard let _ = toVC.view.snapshotView(afterScreenUpdates: true) else {
-            transitionContext.completeTransition(false)
-            return
-        }
-//        toVC.view.layoutIfNeeded()
-        
         let containerView = transitionContext.containerView
         let finalFrame = transitionContext.finalFrame(for: toVC)
+        
+        containerView.addSubview(toVC.view)
         
         let backgroundView = UIView(frame: fromVC.view.frame)
         backgroundView.backgroundColor = .secondarySystemBackground
@@ -199,7 +195,11 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         grabber.frame = fromVC.grabber.frame.offsetBy(dx: 0, dy: fromVC.view.frame.minY)
         grabber.alpha = 1
         
+        guard let backgroundBlur = fromVC.backgroundSwiftUIController?.view.snapshotView(afterScreenUpdates: false) else { return }
+        backgroundBlur.frame = fromVC.view.frame
+        
         containerView.addSubview(backgroundView)
+        containerView.addSubview(backgroundBlur)
         containerView.addSubview(controlsPlayPause)
         containerView.addSubview(trackName)
         containerView.addSubview(playPauseButton)
@@ -234,6 +234,9 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
                 
                 controlsPlayPause.frame = controlsPlayPause.frame.offsetBy(dx: 0, dy: 1000)
                 controlsPlayPause.alpha = 0
+                
+                backgroundBlur.alpha = 0
+                backgroundBlur.frame = toVC.view.frame
             } completion: { _ in
                 defer {
                     fromVC.view.isHidden = false
@@ -244,6 +247,7 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
                 imageView.removeFromSuperview()
                 grabber.removeFromSuperview()
                 controlsPlayPause.removeFromSuperview()
+                backgroundBlur.removeFromSuperview()
             }
     }
 }

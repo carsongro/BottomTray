@@ -136,18 +136,12 @@ class FullScreenPlayerViewController: UIViewController {
     
     private func addSwiftUIController() {
         let backgroundController = UIHostingController(rootView: BackgroundBlurView(seedColor: CGColor(red: 1, green: 0.5, blue: 0.5, alpha: 1)))
-        
         addChild(backgroundController)
         backgroundController.didMove(toParent: self)
         view.insertSubview(backgroundController.view, at: 0)
-        backgroundController.view.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            backgroundController.view.topAnchor.constraint(equalTo: view.topAnchor),
-            backgroundController.view.leftAnchor.constraint(equalTo: view.leftAnchor),
-            backgroundController.view.rightAnchor.constraint(equalTo: view.rightAnchor),
-            backgroundController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        ])
+        backgroundController.view.frame = view.frame
+        backgroundController.view.layer.cornerRadius = 50
+        backgroundController.view.layer.masksToBounds = true
         
         backgroundSwiftUIController = backgroundController
     }

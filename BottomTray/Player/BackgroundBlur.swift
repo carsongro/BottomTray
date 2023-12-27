@@ -85,6 +85,8 @@ fileprivate struct BackgroundBlob: View {
 struct BackgroundBlurView: View {
     var seedColor: CGColor
     
+    @State private var opacity = 0.0
+    
     var body: some View {
         ZStack {
             ForEach(0..<24) { _ in
@@ -92,6 +94,14 @@ struct BackgroundBlurView: View {
             }
         }
         .background(.clear)
+        .opacity(opacity)
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.36) {
+                withAnimation(.spring(duration: 2.5)) {
+                    opacity = 1
+                }
+            }
+        }
     }
 }
 
