@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UIKit
+import MusicKit
 
 protocol FullScreenPlayerDelegate: AnyObject {
     func didTapDismiss()
@@ -17,8 +18,7 @@ class FullScreenPlayerViewController: UIViewController {
     weak var delegate: FullScreenPlayerDelegate?
     
     private var initialCenter = CGPoint(x: 0, y: 0)
-    
-    var shouldDismiss = false
+    private var shouldDismiss = false
     
     public private(set) var backgroundSwiftUIController: UIHostingController<BackgroundBlurView>?
     
@@ -60,7 +60,7 @@ class FullScreenPlayerViewController: UIViewController {
         view.addSubview(playPauseButton)
         view.backgroundColor = .systemBackground
         grabber.addTarget(self, action: #selector(didTapDismiss), for: .touchUpInside)
-//        addSwiftUIController()
+        addSwiftUIController()
         layoutViews()
         addPanGesture()
         view.layer.cornerRadius = 50
@@ -135,7 +135,7 @@ class FullScreenPlayerViewController: UIViewController {
     }
     
     private func addSwiftUIController() {
-        let backgroundController = UIHostingController(rootView: BackgroundBlurView())
+        let backgroundController = UIHostingController(rootView: BackgroundBlurView(seedColor: CGColor(red: 1, green: 0.5, blue: 0.5, alpha: 1)))
         
         addChild(backgroundController)
         backgroundController.didMove(toParent: self)
