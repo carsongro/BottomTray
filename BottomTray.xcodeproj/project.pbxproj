@@ -17,7 +17,7 @@
 		B86543852B3DE50E00CC7177 /* PlayerTray.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86543782B3DE50E00CC7177 /* PlayerTray.swift */; };
 		B86543862B3DE50E00CC7177 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86543792B3DE50E00CC7177 /* PlayerView.swift */; };
 		B86543872B3DE50E00CC7177 /* ProminentButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B865437B2B3DE50E00CC7177 /* ProminentButtonStyle.swift */; };
-		B86543882B3DE50E00CC7177 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B865437C2B3DE50E00CC7177 /* ContentView.swift */; };
+		B86543882B3DE50E00CC7177 /* BrowseSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B865437C2B3DE50E00CC7177 /* BrowseSearchView.swift */; };
 		B86543892B3DE50E00CC7177 /* MusicPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B865437D2B3DE50E00CC7177 /* MusicPlayerManager.swift */; };
 		B865438A2B3DE50E00CC7177 /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B865437F2B3DE50E00CC7177 /* TrackCell.swift */; };
 		B865438B2B3DE50E00CC7177 /* MusicItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86543802B3DE50E00CC7177 /* MusicItemCell.swift */; };
@@ -44,7 +44,7 @@
 		B86543782B3DE50E00CC7177 /* PlayerTray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTray.swift; sourceTree = "<group>"; };
 		B86543792B3DE50E00CC7177 /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		B865437B2B3DE50E00CC7177 /* ProminentButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProminentButtonStyle.swift; sourceTree = "<group>"; };
-		B865437C2B3DE50E00CC7177 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B865437C2B3DE50E00CC7177 /* BrowseSearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseSearchView.swift; sourceTree = "<group>"; };
 		B865437D2B3DE50E00CC7177 /* MusicPlayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlayerManager.swift; sourceTree = "<group>"; };
 		B865437F2B3DE50E00CC7177 /* TrackCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
 		B86543802B3DE50E00CC7177 /* MusicItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicItemCell.swift; sourceTree = "<group>"; };
@@ -120,7 +120,7 @@
 		B865438D2B3DE53100CC7177 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				B865437C2B3DE50E00CC7177 /* ContentView.swift */,
+				B865437C2B3DE50E00CC7177 /* BrowseSearchView.swift */,
 				B865437D2B3DE50E00CC7177 /* MusicPlayerManager.swift */,
 				B86543812B3DE50E00CC7177 /* WelcomeView.swift */,
 				B86543762B3DE50E00CC7177 /* RecentAlbumsStorage.swift */,
@@ -278,7 +278,7 @@
 				B86543822B3DE50E00CC7177 /* AlbumDetailView.swift in Sources */,
 				B86433402B364840004D70D8 /* FullScreenPlayerViewController.swift in Sources */,
 				B8DB64062B35E65D00FF0D49 /* TabBarController.swift in Sources */,
-				B86543882B3DE50E00CC7177 /* ContentView.swift in Sources */,
+				B86543882B3DE50E00CC7177 /* BrowseSearchView.swift in Sources */,
 				B865438A2B3DE50E00CC7177 /* TrackCell.swift in Sources */,
 				B865438C2B3DE50E00CC7177 /* WelcomeView.swift in Sources */,
 				B86543892B3DE50E00CC7177 /* MusicPlayerManager.swift in Sources */,
@@ -431,6 +431,7 @@
 				DEVELOPMENT_TEAM = HV69QD4SV2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BottomTray/Info.plist;
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "We need access to you music to search.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -458,6 +459,7 @@
 				DEVELOPMENT_TEAM = HV69QD4SV2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BottomTray/Info.plist;
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "We need access to you music to search.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

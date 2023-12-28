@@ -13,6 +13,7 @@ class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let libraryVC = LibraryViewController()
         let browseVC = BrowseViewController()
         
@@ -22,13 +23,13 @@ class TabBarController: UITabBarController {
         let nav1 = UINavigationController(rootViewController: browseVC)
         let nav2 = UINavigationController(rootViewController: libraryVC)
         
-        nav2.tabBarItem = UITabBarItem(
+        libraryVC.tabBarItem = UITabBarItem(
             title: "Library",
             image: UIImage(systemName: "music.note.list"),
             tag: 1
         )
         
-        nav1.tabBarItem = UITabBarItem(
+        browseVC.tabBarItem = UITabBarItem(
             title: "Browse",
             image: UIImage(systemName: "music.note.house.fill"),
             tag: 2

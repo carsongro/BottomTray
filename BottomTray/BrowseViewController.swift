@@ -16,6 +16,7 @@ class BrowseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        navigationController?.setNavigationBarHidden(true, animated: false)
         addSwiftUIController()
     }
     
@@ -24,7 +25,7 @@ class BrowseViewController: UIViewController {
         addChild(searchController)
         searchController.didMove(toParent: self)
         view.addSubview(searchController.view)
-        searchController.view.frame = view.frame
+        searchController.view.frame = view.bounds
         
         swiftUIHomeSearchController = searchController
     }
