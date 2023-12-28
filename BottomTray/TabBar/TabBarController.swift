@@ -19,16 +19,16 @@ class TabBarController: UITabBarController {
         libraryVC.navigationItem.largeTitleDisplayMode = .automatic
         browseVC.navigationItem.largeTitleDisplayMode = .automatic
         
-        let nav1 = UINavigationController(rootViewController: libraryVC)
-        let nav2 = UINavigationController(rootViewController: browseVC)
+        let nav1 = UINavigationController(rootViewController: browseVC)
+        let nav2 = UINavigationController(rootViewController: libraryVC)
         
-        nav1.tabBarItem = UITabBarItem(
+        nav2.tabBarItem = UITabBarItem(
             title: "Library",
             image: UIImage(systemName: "music.note.list"),
             tag: 1
         )
         
-        nav2.tabBarItem = UITabBarItem(
+        nav1.tabBarItem = UITabBarItem(
             title: "Browse",
             image: UIImage(systemName: "music.note.house.fill"),
             tag: 2
