@@ -209,6 +209,8 @@
 			dependencies = (
 			);
 			name = BottomTray;
+			packageProductDependencies = (
+			);
 			productName = BottomTray;
 			productReference = B8892CDB2B3540D400D29012 /* BottomTray.app */;
 			productType = "com.apple.product-type.application";
@@ -237,6 +239,8 @@
 				Base,
 			);
 			mainGroup = B8892CD22B3540D300D29012;
+			packageReferences = (
+			);
 			productRefGroup = B8892CDC2B3540D400D29012 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

@@ -49,6 +49,8 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         let imageView = UIImageView()
         imageView.image = fromVC.trackImage.image
         imageView.contentMode = fromVC.trackImage.contentMode
+        imageView.layer.cornerRadius = fromVC.trackImage.layer.cornerRadius
+        imageView.layer.masksToBounds = true
         imageView.frame = fromVC.trackImage.convert(fromVC.trackImage.bounds, to: fromVC.view.window)
         
         guard let trackName = fromVC.textView.snapshotView(afterScreenUpdates: false),
@@ -99,6 +101,7 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
                 backgroundView.frame = finalFrame
                 
                 imageView.frame = toVC.trackImage.frame
+                imageView.layer.cornerRadius = toVC.trackImage.layer.cornerRadius
                 
                 trackName.frame = CGRect(
                     x: trackName.frame.minX,
@@ -161,6 +164,8 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         let imageView = UIImageView()
         imageView.image = fromVC.trackImage.image
         imageView.contentMode = fromVC.trackImage.contentMode
+        imageView.layer.cornerRadius = fromVC.trackImage.layer.cornerRadius
+        imageView.layer.masksToBounds = true
         imageView.frame = fromVC.trackImage.convert(fromVC.trackImage.bounds, to: fromVC.view.window)
         
         guard let trackName = toVC.textView.snapshotView(afterScreenUpdates: false),
@@ -215,7 +220,9 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
             options: []) {
                 backgroundView.layer.cornerRadius = 15
                 backgroundView.frame = toVC.view.frame
+                
                 imageView.frame = toVC.trackImage.convert(toVC.trackImage.bounds, to: fromVC.view.window)
+                imageView.layer.cornerRadius = toVC.trackImage.layer.cornerRadius
                 
                 trackName.frame = toVC.textView.convert(toVC.textView.bounds, to: toVC.view.window)
                 trackName.alpha = 1

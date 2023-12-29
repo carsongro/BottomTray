@@ -13,8 +13,8 @@ protocol FullScreenPlayerDelegate: AnyObject {
     func didTapDismiss()
 }
 
-class FullScreenPlayerViewController: UIViewController {
-    
+class FullScreenPlayerViewController: UIViewController, PlayerObserver {
+
     weak var delegate: FullScreenPlayerDelegate?
     
     private var initialCenter = CGPoint(x: 0, y: 0)
@@ -25,9 +25,13 @@ class FullScreenPlayerViewController: UIViewController {
     let trackImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "square.fill")
+        imageView.alpha = 0
+        imageView.layer.cornerRadius = 10
+        imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
+
     
     let grabber: UIButton = {
         let button = UIButton()
@@ -60,12 +64,44 @@ class FullScreenPlayerViewController: UIViewController {
         view.addSubview(playPauseButton)
         view.backgroundColor = .systemBackground
         grabber.addTarget(self, action: #selector(didTapDismiss), for: .touchUpInside)
+        playPauseButton.addTarget(self, action: #selector(didTapPlayPause), for: .touchUpInside)
+        MusicPlayerManager.shared.registerObserver(self)
+        MusicPlayerManager.shared.notifyObservers()
         addSwiftUIController()
         layoutViews()
         addPanGesture()
         view.layer.cornerRadius = 50
     }
     
+    func update(with player: ApplicationMusicPlayer) {
+        configure(with: player)
+    }
+    
+    func configure(with player: ApplicationMusicPlayer) {
+        Task { @MainActor in
+            playPauseButton.setImage(
+                UIImage(
+                    systemName: player.state.playbackStatus == .playing ? "pause.fill" : "play.fill",
+                    withConfiguration: UIImage.SymbolConfiguration(
+                        pointSize: 44
+                    )
+                ),
+                for: .normal
+            )
+            playPauseButton.isEnabled = true
+            
+            guard let width = player.queue.currentEntry?.artwork?.maximumWidth,
+                  let height = player.queue.currentEntry?.artwork?.maximumHeight,
+                  let url = player.queue.currentEntry?.artwork?.url(width: width, height: height) else {
+                return
+            }
+            let request = URLRequest(url: url)
+            let (data, _) = try await URLSession.shared.data(for: request)
+            trackImage.image = UIImage(data: data)
+            trackImage.alpha = 1
+        }
+    }
+
     func layoutViews() {
         grabber.frame = CGRect(
             x: view.frame.width / 2 - 22,
@@ -74,11 +110,12 @@ class FullScreenPlayerViewController: UIViewController {
             height: 44
         )
         
+        let imageWith = view.frame.width - 30
         trackImage.frame = CGRect(
-            x: view.frame.width / 2 - 200,
-            y: grabber.frame.maxY,
-            width: 400,
-            height: 400
+            x: view.center.x - imageWith / 2,
+            y: grabber.frame.maxY + 10,
+            width: imageWith,
+            height: imageWith
         )
         
         playPauseButton.frame = CGRect(
@@ -121,6 +158,10 @@ class FullScreenPlayerViewController: UIViewController {
         default:
             resetToCenter()
         }
+    }
+    
+    @objc private func didTapPlayPause() {
+        MusicPlayerManager.shared.handlePlayPause()
     }
     
     private func resetToCenter() {

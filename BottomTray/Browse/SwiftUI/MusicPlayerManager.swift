@@ -15,7 +15,11 @@ import Foundation
     
     var album: Album?
     /// The MusicKit player to use for Apple Music playback.
-    private let player = ApplicationMusicPlayer.shared
+    private var player = ApplicationMusicPlayer.shared {
+        didSet {
+            notifyObservers()
+        }
+    }
     
     /// The state of the MusicKit player to use for Apple Music playback.
     private var playerState = ApplicationMusicPlayer.shared.state
@@ -27,14 +31,18 @@ import Foundation
         playerState.playbackStatus == .playing
     }
     
+    private var observers = [PlayerObserver]()
+    
     func handlePlayPause() {
         guard isPlaybackQueueSet else { return }
         if isPlaying {
             player.pause()
+            notifyObservers()
         } else {
             Task {
                 do {
                     try await player.play()
+                    notifyObservers()
                 } catch {
                     print("Failed to resume playing with error: \(error).")
                 }
@@ -54,10 +62,12 @@ import Foundation
                 player.queue = [album]
                 isPlaybackQueueSet = true
                 beginPlaying()
+                notifyObservers()
             } else {
                 Task {
                     do {
                         try await player.play()
+                        notifyObservers()
                     } catch {
                         print("Failed to resume playing with error: \(error).")
                     }
@@ -65,6 +75,7 @@ import Foundation
             }
         } else {
             player.pause()
+            notifyObservers()
         }
     }
     
@@ -83,9 +94,28 @@ import Foundation
         Task {
             do {
                 try await player.play()
+                notifyObservers()
             } catch {
                 print("Failed to prepare to play with error: \(error).")
             }
+        }
+    }
+}
+
+extension MusicPlayerManager: PlayerSubject {
+    func registerObserver(_ observer: PlayerObserver) {
+        observers.append(observer)
+    }
+    
+    func removeObserver(_ observer: PlayerObserver) {
+        if let index = observers.firstIndex(where: { $0 === observer }) {
+            observers.remove(at: index)
+        }
+    }
+    
+    func notifyObservers() {
+        for observer in observers {
+            observer.update(with: player)
         }
     }
 }
