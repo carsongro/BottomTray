@@ -20,8 +20,6 @@ class FullScreenPlayerViewController: UIViewController, PlayerObserver {
     private var initialCenter = CGPoint(x: 0, y: 0)
     private var shouldDismiss = false
     
-    public private(set) var backgroundSwiftUIController: UIHostingController<BackgroundBlurView>?
-    
     let trackImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "square.fill")
@@ -67,7 +65,6 @@ class FullScreenPlayerViewController: UIViewController, PlayerObserver {
         playPauseButton.addTarget(self, action: #selector(didTapPlayPause), for: .touchUpInside)
         MusicPlayerManager.shared.registerObserver(self)
         MusicPlayerManager.shared.notifyObservers()
-        addSwiftUIController()
         layoutViews()
         addPanGesture()
         view.layer.cornerRadius = 50
@@ -173,18 +170,6 @@ class FullScreenPlayerViewController: UIViewController, PlayerObserver {
             options: []) {
                 view.center = initialCenter
             }
-    }
-    
-    private func addSwiftUIController() {
-        let backgroundController = UIHostingController(rootView: BackgroundBlurView(seedColor: CGColor(red: 1, green: 0.5, blue: 0.5, alpha: 1)))
-        addChild(backgroundController)
-        backgroundController.didMove(toParent: self)
-        view.insertSubview(backgroundController.view, at: 0)
-        backgroundController.view.frame = view.frame
-        backgroundController.view.layer.cornerRadius = 50
-        backgroundController.view.layer.masksToBounds = true
-        
-        backgroundSwiftUIController = backgroundController
     }
         
     @objc private func didTapDismiss() {
