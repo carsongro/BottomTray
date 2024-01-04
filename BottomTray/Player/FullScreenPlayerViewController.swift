@@ -22,7 +22,6 @@ class FullScreenPlayerViewController: UIViewController, PlayerObserver {
     
     let trackImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "square.fill")
         imageView.alpha = 0
         imageView.layer.cornerRadius = 10
         imageView.layer.masksToBounds = true

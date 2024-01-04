@@ -23,7 +23,6 @@ class MiniPlayerViewController: UIViewController, FullScreenPlayerDelegate, Play
     
     let trackImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "square.fill")
         imageView.alpha = 0
         imageView.layer.cornerRadius = 6
         imageView.layer.masksToBounds = true
@@ -102,6 +101,8 @@ class MiniPlayerViewController: UIViewController, FullScreenPlayerDelegate, Play
     }
     
     @objc private func handleTap(_ sender: UITapGestureRecognizer) {
+        guard MusicPlayerManager.shared.isPlaybackQueueSet else { return }
+        
         presentFullScreenPlayer()
     }
     

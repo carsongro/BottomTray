@@ -41,6 +41,7 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         let finalFrame = transitionContext.finalFrame(for: toVC)
         
         containerView.addSubview(toVC.view)
+        toVC.view.isHidden = true
         
         let backgroundView = UIView(frame: fromVC.view.frame)
         backgroundView.backgroundColor = .secondarySystemBackground
@@ -67,8 +68,8 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         grabber.layer.cornerRadius = 2.5
         grabber.grabberBlur(style: .systemThinMaterialLight, cornerRadius: 2.5)
         grabber.frame = CGRect(
-            x: Int(toVC.view.frame.midX - 22),
-            y: Int(playPauseButton.frame.midY),
+            x: toVC.view.frame.midX - 22,
+            y: playPauseButton.frame.midY,
             width: 44,
             height: 44
         )
@@ -76,20 +77,18 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
         
         controlsPlayPause.frame = CGRect(
             x: toVC.view.frame.midX - controlsPlayPause.frame.width / 2,
-            y: toVC.view.frame.maxY,
+            y: playPauseButton.frame.minY,
             width: 44,
             height: 44
         )
         controlsPlayPause.alpha = 0
         
-        containerView.addSubview(toVC.view)
         containerView.addSubview(backgroundView)
         containerView.addSubview(controlsPlayPause)
         containerView.addSubview(trackName)
         containerView.addSubview(playPauseButton)
         containerView.addSubview(grabber)
         containerView.addSubview(imageView)
-        toVC.view.isHidden = true
         
         UIView.animate(
             springDuration: transitionDuration(using: transitionContext),
@@ -135,10 +134,6 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
                     height: 44
                 )
             } completion: { _ in
-                defer {
-                    transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-                }
-                
                 toVC.view.isHidden = false
                 
                 backgroundView.removeFromSuperview()
@@ -147,6 +142,8 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
                 playPauseButton.removeFromSuperview()
                 grabber.removeFromSuperview()
                 controlsPlayPause.removeFromSuperview()
+                
+                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
             }
     }
     
@@ -238,15 +235,17 @@ class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTra
                 controlsPlayPause.frame = controlsPlayPause.frame.offsetBy(dx: 0, dy: 1000)
                 controlsPlayPause.alpha = 0
             } completion: { _ in
-                defer {
-                    fromVC.view.isHidden = false
-                    transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-                }
+                fromVC.view.isHidden = false
                 
                 backgroundView.removeFromSuperview()
                 imageView.removeFromSuperview()
+                trackName.removeFromSuperview()
+                playPauseButton.removeFromSuperview()
                 grabber.removeFromSuperview()
                 controlsPlayPause.removeFromSuperview()
+                
+                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+
             }
     }
 }

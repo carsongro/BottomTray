@@ -42,7 +42,7 @@ class TabBarController: UITabBarController {
             $0.additionalSafeAreaInsets = UIEdgeInsets(
                 top: 0,
                 left: 0,
-                bottom: 60,
+                bottom: 50,
                 right: 0
             )
         }
@@ -59,7 +59,7 @@ class TabBarController: UITabBarController {
         NSLayoutConstraint.activate([
             miniPlayer.view.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 18),
             miniPlayer.view.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -18),
-            miniPlayer.view.bottomAnchor.constraint(equalTo: tabBar.topAnchor, constant: -10),
+            miniPlayer.view.bottomAnchor.constraint(equalTo: tabBar.topAnchor, constant: -5),
             miniPlayer.view.heightAnchor.constraint(equalToConstant: 55),
         ])
     }
