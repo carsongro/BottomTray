@@ -60,8 +60,20 @@ class FullScreenPlayerViewController: UIViewController, PlayerObserver {
         view.addSubview(grabber)
         view.addSubview(playPauseButton)
         view.backgroundColor = .systemBackground
-        grabber.addTarget(self, action: #selector(didTapDismiss), for: .touchUpInside)
-        playPauseButton.addTarget(self, action: #selector(didTapPlayPause), for: .touchUpInside)
+        grabber.addAction(
+            UIAction(handler: {
+                [weak self] _ in
+                self?.didTapDismiss()
+            }),
+            for: .primaryActionTriggered
+        )
+        playPauseButton.addAction(
+            UIAction(handler: {
+                [weak self] _ in
+                self?.didTapPlayPause()
+            }),
+            for: .primaryActionTriggered
+        )
         MusicPlayerManager.shared.registerObserver(self)
         MusicPlayerManager.shared.notifyObservers()
         layoutViews()
@@ -156,7 +168,7 @@ class FullScreenPlayerViewController: UIViewController, PlayerObserver {
         }
     }
     
-    @objc private func didTapPlayPause() {
+    private func didTapPlayPause() {
         MusicPlayerManager.shared.handlePlayPause()
     }
     
@@ -171,7 +183,7 @@ class FullScreenPlayerViewController: UIViewController, PlayerObserver {
             }
     }
         
-    @objc private func didTapDismiss() {
+    private func didTapDismiss() {
         delegate?.didTapDismiss()
     }
 }

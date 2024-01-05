@@ -64,7 +64,13 @@ class MiniPlayerViewController: UIViewController, FullScreenPlayerDelegate, Play
         view.addSubview(textView)
         view.addSubview(playPauseButton)
         addConstraints()
-        playPauseButton.addTarget(self, action: #selector(didTapPlayPause), for: .touchUpInside)
+        playPauseButton.addAction(
+            UIAction(handler: {
+                [weak self] action in
+                self?.didTapPlayPause()
+            }),
+            for: .primaryActionTriggered
+        )
         MusicPlayerManager.shared.registerObserver(self)
         view.layer.cornerRadius = 15
         view.backgroundColor = .secondarySystemBackground
@@ -106,7 +112,7 @@ class MiniPlayerViewController: UIViewController, FullScreenPlayerDelegate, Play
         presentFullScreenPlayer()
     }
     
-    @objc private func didTapPlayPause() {
+    private func didTapPlayPause() {
         MusicPlayerManager.shared.handlePlayPause()
     }
     
@@ -123,7 +129,6 @@ class MiniPlayerViewController: UIViewController, FullScreenPlayerDelegate, Play
     }
     
     func configure(with player: ApplicationMusicPlayer) {
-        dump(player.state)
         Task { @MainActor in
             playPauseButton.setImage(
                 UIImage(
