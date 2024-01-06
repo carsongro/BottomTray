@@ -26,7 +26,6 @@
 		B8892CE12B3540D400D29012 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8892CE02B3540D400D29012 /* SceneDelegate.swift */; };
 		B8892CE82B3540D400D29012 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8892CE72B3540D400D29012 /* Assets.xcassets */; };
 		B8892CEB2B3540D400D29012 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8892CE92B3540D400D29012 /* LaunchScreen.storyboard */; };
-		B8AFB4FF2B3B531300D44174 /* PanInteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AFB4FE2B3B531300D44174 /* PanInteractionController.swift */; };
 		B8B8200D2B3B29B3007EC1C8 /* BackgroundBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B8200C2B3B29B3007EC1C8 /* BackgroundBlur.swift */; };
 		B8DB64022B35E62C00FF0D49 /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DB64012B35E62C00FF0D49 /* BrowseViewController.swift */; };
 		B8DB64042B35E63300FF0D49 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DB64032B35E63300FF0D49 /* LibraryViewController.swift */; };
@@ -55,7 +54,6 @@
 		B8892CE72B3540D400D29012 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B8892CEA2B3540D400D29012 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B8892CEC2B3540D400D29012 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B8AFB4FE2B3B531300D44174 /* PanInteractionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanInteractionController.swift; sourceTree = "<group>"; };
 		B8B8200C2B3B29B3007EC1C8 /* BackgroundBlur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundBlur.swift; sourceTree = "<group>"; };
 		B8DB64012B35E62C00FF0D49 /* BrowseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
 		B8DB64032B35E63300FF0D49 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
@@ -77,7 +75,6 @@
 			isa = PBXGroup;
 			children = (
 				B8DB64052B35E65D00FF0D49 /* TabBarController.swift */,
-				B86433412B3655CF004D70D8 /* FullScreenPlayerAnimationController.swift */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -185,10 +182,10 @@
 		B8F535D32B37796E008BA16F /* Player */ = {
 			isa = PBXGroup;
 			children = (
+				B86433412B3655CF004D70D8 /* FullScreenPlayerAnimationController.swift */,
 				B864333D2B3638C2004D70D8 /* MiniPlayerViewController.swift */,
 				B864333F2B364840004D70D8 /* FullScreenPlayerViewController.swift */,
 				B8B8200C2B3B29B3007EC1C8 /* BackgroundBlur.swift */,
-				B8AFB4FE2B3B531300D44174 /* PanInteractionController.swift */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -267,7 +264,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B8AFB4FF2B3B531300D44174 /* PanInteractionController.swift in Sources */,
 				B86543832B3DE50E00CC7177 /* AlbumCell.swift in Sources */,
 				B86433422B3655CF004D70D8 /* FullScreenPlayerAnimationController.swift in Sources */,
 				B86543862B3DE50E00CC7177 /* PlayerView.swift in Sources */,

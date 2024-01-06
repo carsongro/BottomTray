@@ -10,12 +10,6 @@ import SwiftUI
 
 class FullScreenPlayerAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
     
-//    let interactionController: PanInteractionController?
-//    
-//    init(interactionController: PanInteractionController?) {
-//        self.interactionController = interactionController
-//    }
-    
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         0.36
     }
