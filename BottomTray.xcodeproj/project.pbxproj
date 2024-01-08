@@ -14,8 +14,6 @@
 		B86543822B3DE50E00CC7177 /* AlbumDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86543742B3DE50E00CC7177 /* AlbumDetailView.swift */; };
 		B86543832B3DE50E00CC7177 /* AlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86543752B3DE50E00CC7177 /* AlbumCell.swift */; };
 		B86543842B3DE50E00CC7177 /* RecentAlbumsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86543762B3DE50E00CC7177 /* RecentAlbumsStorage.swift */; };
-		B86543852B3DE50E00CC7177 /* PlayerTray.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86543782B3DE50E00CC7177 /* PlayerTray.swift */; };
-		B86543862B3DE50E00CC7177 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86543792B3DE50E00CC7177 /* PlayerView.swift */; };
 		B86543872B3DE50E00CC7177 /* ProminentButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B865437B2B3DE50E00CC7177 /* ProminentButtonStyle.swift */; };
 		B86543882B3DE50E00CC7177 /* BrowseSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B865437C2B3DE50E00CC7177 /* BrowseSearchView.swift */; };
 		B86543892B3DE50E00CC7177 /* MusicPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B865437D2B3DE50E00CC7177 /* MusicPlayerManager.swift */; };
@@ -40,8 +38,6 @@
 		B86543742B3DE50E00CC7177 /* AlbumDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumDetailView.swift; sourceTree = "<group>"; };
 		B86543752B3DE50E00CC7177 /* AlbumCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumCell.swift; sourceTree = "<group>"; };
 		B86543762B3DE50E00CC7177 /* RecentAlbumsStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentAlbumsStorage.swift; sourceTree = "<group>"; };
-		B86543782B3DE50E00CC7177 /* PlayerTray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTray.swift; sourceTree = "<group>"; };
-		B86543792B3DE50E00CC7177 /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		B865437B2B3DE50E00CC7177 /* ProminentButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProminentButtonStyle.swift; sourceTree = "<group>"; };
 		B865437C2B3DE50E00CC7177 /* BrowseSearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseSearchView.swift; sourceTree = "<group>"; };
 		B865437D2B3DE50E00CC7177 /* MusicPlayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlayerManager.swift; sourceTree = "<group>"; };
@@ -88,15 +84,6 @@
 			path = Album;
 			sourceTree = "<group>";
 		};
-		B86543772B3DE50E00CC7177 /* Player */ = {
-			isa = PBXGroup;
-			children = (
-				B86543782B3DE50E00CC7177 /* PlayerTray.swift */,
-				B86543792B3DE50E00CC7177 /* PlayerView.swift */,
-			);
-			path = Player;
-			sourceTree = "<group>";
-		};
 		B865437A2B3DE50E00CC7177 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -123,7 +110,6 @@
 				B86543762B3DE50E00CC7177 /* RecentAlbumsStorage.swift */,
 				B86543732B3DE50E00CC7177 /* Album */,
 				B865437A2B3DE50E00CC7177 /* Components */,
-				B86543772B3DE50E00CC7177 /* Player */,
 				B865437E2B3DE50E00CC7177 /* Track */,
 			);
 			path = SwiftUI;
@@ -266,9 +252,7 @@
 			files = (
 				B86543832B3DE50E00CC7177 /* AlbumCell.swift in Sources */,
 				B86433422B3655CF004D70D8 /* FullScreenPlayerAnimationController.swift in Sources */,
-				B86543862B3DE50E00CC7177 /* PlayerView.swift in Sources */,
 				B80E062B2B38C6F40007F659 /* Extensions.swift in Sources */,
-				B86543852B3DE50E00CC7177 /* PlayerTray.swift in Sources */,
 				B8DB64042B35E63300FF0D49 /* LibraryViewController.swift in Sources */,
 				B8892CDF2B3540D400D29012 /* AppDelegate.swift in Sources */,
 				B86543842B3DE50E00CC7177 /* RecentAlbumsStorage.swift in Sources */,

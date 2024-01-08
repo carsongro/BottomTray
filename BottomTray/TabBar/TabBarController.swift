@@ -38,15 +38,6 @@ class TabBarController: UITabBarController {
         nav1.navigationBar.prefersLargeTitles = true
         nav2.navigationBar.prefersLargeTitles = true
         
-        [libraryVC, browseVC].forEach {
-            $0.additionalSafeAreaInsets = UIEdgeInsets(
-                top: 0,
-                left: 0,
-                bottom: 50,
-                right: 0
-            )
-        }
-        
         setViewControllers(
             [nav1, nav2],
             animated: true

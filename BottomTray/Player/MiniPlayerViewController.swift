@@ -148,6 +148,7 @@ class MiniPlayerViewController: UIViewController, FullScreenPlayerDelegate, Play
                   let url = player.queue.currentEntry?.artwork?.url(width: width, height: height) else {
                 return
             }
+            
             let request = URLRequest(url: url)
             let (data, _) = try await URLSession.shared.data(for: request)
             trackImage.image = UIImage(data: data)
